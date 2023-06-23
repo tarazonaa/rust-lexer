@@ -1,3 +1,5 @@
+use crate::token::{Token, TokenType};
+
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Lexer {
     input: String,
@@ -26,5 +28,22 @@ impl Lexer {
         }
         self.position = self.read_position;
         self.read_position += 1;
+    }
+
+    pub fn next_token(&mut self) -> Token {
+        let tok = match self.ch {
+            '=' => Token::new(TokenType::ASSIGN, self.ch.to_string()),
+            ';' => Token::new(TokenType::SEMICOLON, self.ch.to_string()),
+            '(' => Token::new(TokenType::LPAREN, self.ch.to_string()),
+            ')' => Token::new(TokenType::RPAREN, self.ch.to_string()),
+            ',' => Token::new(TokenType::COMMA, self.ch.to_string()),
+            '+' => Token::new(TokenType::PLUS, self.ch.to_string()),
+            '{' => Token::new(TokenType::LBRACE, self.ch.to_string()),
+            '}' => Token::new(TokenType::RBRACE, self.ch.to_string()),
+            '\0' => Token::new(TokenType::EOF, self.ch.to_string()),
+            _ => Token::new(TokenType::ILLEGAL, self.ch.to_string()),
+        };
+        self.read_char();
+        return tok;
     }
 }

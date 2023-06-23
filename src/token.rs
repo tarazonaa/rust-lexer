@@ -1,17 +1,45 @@
+// Purpose: Defines the Token struct and TokenType type.
+
 #[derive(Debug, PartialEq, Eq)]
-pub enum Token {
-    Illegal,
+pub enum TokenType {
+    ILLEGAL,
     EOF,
-    Ident,
-    Int,
-    Assign,
-    Plus,
-    Comma,
-    Semicolon,
-    LParen,
-    RParen,
-    LBrace,
-    RBrace,
-    Function,
-    Let,
+
+    // Identifiers + literals
+    IDENT,
+    INT,
+
+    // Operators
+    ASSIGN,
+    PLUS,
+
+    // Delimiters
+    COMMA,
+    SEMICOLON,
+
+    LPAREN,
+    RPAREN,
+    LBRACE,
+    RBRACE,
+
+    // Keywords
+    FUNCTION,
+    LET,
 }
+
+#[derive(Debug, PartialEq, Eq)]
+pub struct Token {
+    token_type: TokenType,
+    literal: String,
+}
+
+impl Token {
+    pub fn new(token_type: TokenType, literal: String) -> Token {
+        Token {
+            token_type,
+            literal,
+        }
+    }
+}
+
+
