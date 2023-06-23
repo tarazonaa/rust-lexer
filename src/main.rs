@@ -23,7 +23,7 @@ mod tests {
     #[test]
     fn test_next_token() {
         let input = "=+(){},;".to_string();
-        let l = lexer::Lexer::new(input);
-        assert_eq!(l.read_char(), Token::new(TokenType::ASSIGN, "=".to_string()));
+        let mut l = lexer::Lexer::new(input);
+        assert_eq!(l.next_token(), Token::new(TokenType::ASSIGN, "=".to_string()));
     }
 }
