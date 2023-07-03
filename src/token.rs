@@ -36,19 +36,22 @@ pub struct Token {
     literal: String,
 }
 
+const KEYWORD_ARRAY: [(&str, TokenType); 2] = [
+    ("fn", TokenType::FUNCTION),
+    ("let", TokenType::LET),
+];
+
 #[allow(dead_code)]
 pub fn lookup_ident(ident: String) -> Token {
-    let keywords: HashMap<String, TokenType> = HashMap::from([
-        ("fn".to_string(), TokenType::FUNCTION),
-        ("let".to_string(), TokenType::LET),
-    ]);
+    let ident = ident.as_str();
+    let keywords = HashMap::from(KEYWORD_ARRAY);
     if keywords.contains_key(&ident) {
         let token_type = keywords.get(&ident).unwrap();
         let literal = ident;
-        return Token::new(token_type.clone(), literal);
+        return Token::new(token_type.clone(), literal.to_string());
     }
 
-    Token::new(TokenType::IDENT, ident)
+    Token::new(TokenType::IDENT, ident.to_string())
 }
 
 #[allow(dead_code)]
