@@ -1,21 +1,22 @@
+use lexer::Lexer;
+use token::Token;
+
 mod token;
 mod lexer;
 
-fn lex(input: String) {
-    let mut l = lexer::Lexer::new(input);
-    loop {
-        let tok = l.read_char();
-        println!("{:?}", tok);
-    }
-}
-
 fn main() {
+        let input = "let five = 5;".to_string();
+        let mut l = Lexer::new(input);
+        let mut tokens: Vec<Token> = Vec::new();
+        while l.ch != '\0' {
+            tokens.push(l.next_token())
+        }
     
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::token::TokenType;
+    use crate::{token::TokenType, lexer::Lexer};
 
     use super::*;
     use token::Token;
@@ -44,5 +45,21 @@ mod tests {
                     Token::new(TokenType::RBRACE, "}".to_string()),
                     Token::new(TokenType::COMMA, ",".to_string()),
                     Token::new(TokenType::SEMICOLON, ";".to_string())]);
+    }
+
+    #[test]
+    fn test_monkey() {
+        let input = "let five = 5;".to_string();
+        let mut l = Lexer::new(input);
+        let mut tokens: Vec<Token> = Vec::new();
+        while l.ch != '\0' {
+            tokens.push(l.next_token())
+        }
+        assert_eq!(tokens,
+                   [Token::new(TokenType::LET, "let".to_string()),
+                   Token::new(TokenType::IDENT, "five".to_string()),
+                   Token::new(TokenType::ASSIGN, "=".to_string()),
+                   Token::new(TokenType::INT, "5".to_string()),
+                   Token::new(TokenType::SEMICOLON, ";".to_string())])
     }
 }
