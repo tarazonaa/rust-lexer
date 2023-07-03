@@ -5,7 +5,7 @@ pub struct Lexer {
     input: String,
     position: usize,
     read_position: usize,
-    ch: char,
+    pub ch: char,
 }
 
 impl Lexer {
